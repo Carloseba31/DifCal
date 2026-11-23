@@ -25,7 +25,7 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px}
-.app{max-width:520px;margin:0 auto;min-height:100vh;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 96px)}
+.app{max-width:520px;margin:0 auto;min-height:100vh;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 90px)}
 header.top{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 14px}
 .brand{font-weight:800;font-size:22px;letter-spacing:-.5px}
 .brand span{color:var(--green)}
@@ -65,13 +65,14 @@ button{font:inherit;cursor:pointer;border:none}
 .meal .n{text-align:right;font-size:13px}
 .meal .n b{font-size:15px}
 .empty{text-align:center;padding:22px 8px;color:var(--muted)}
-nav.tab{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);display:flex;justify-content:center;z-index:5}
-nav.tab .in{max-width:520px;width:100%;display:flex;align-items:center;justify-content:space-around}
-nav.tab button{background:none;color:var(--muted);font-size:11.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 8px}
-nav.tab button.on{color:var(--green)}
-nav.tab svg{width:24px;height:24px}
-nav.tab .plus{background:var(--green);color:#fff;width:58px;height:58px;border-radius:50%;justify-content:center;margin-top:-26px;box-shadow:0 6px 18px rgba(31,157,85,.35)}
-nav.tab .plus svg{width:30px;height:30px}
+nav.tab{position:sticky;top:0;background:var(--bg);padding:6px 0 10px;margin:0 -16px 12px;padding-left:16px;padding-right:16px;z-index:5;border-bottom:1px solid var(--line)}
+nav.tab .in{display:flex;align-items:center;justify-content:space-between;gap:4px}
+nav.tab button{background:none;color:var(--muted);font-size:11.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 6px;border-radius:12px;flex:1}
+nav.tab button.on{color:var(--green);background:var(--green-l)}
+nav.tab svg{width:22px;height:22px}
+nav.tab .plus{background:var(--green);color:#fff;flex:1.2}
+nav.tab .plus.on{background:var(--green-d);color:#fff}
+nav.tab .plus svg{width:22px;height:22px}
 .photobox{border:2px dashed var(--line);border-radius:var(--r);padding:18px;text-align:center;position:relative;overflow:hidden}
 .photobox img{max-width:100%;max-height:260px;border-radius:12px;display:block;margin:0 auto}
 .photobox .lbl{font-weight:700}
@@ -102,7 +103,7 @@ table.rel th{color:var(--muted);font-weight:600;font-size:12px}
 .ok{color:var(--green);font-weight:700}
 .spinner{width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--green);border-radius:50%;animation:sp 1s linear infinite;display:inline-block;vertical-align:middle}
 @keyframes sp{to{transform:rotate(360deg)}}
-.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 92px);transform:translateX(-50%);background:var(--ink);color:var(--card);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90%}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 84px);transform:translateX(-50%);background:var(--ink);color:var(--card);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90%}
 .toast.show{opacity:1}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;z-index:30}
 .modal .sheet{background:var(--card);width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 18px);max-height:85vh;overflow:auto}
@@ -123,16 +124,16 @@ svg.chart text{font-size:10px;fill:var(--muted);font-family:Inter,sans-serif}
     <div class="brand">Dif<span>Cal</span></div>
     <div class="datepill" id="datepill"></div>
   </header>
-  <main id="view"></main>
-</div>
-
-<nav class="tab" id="nav" style="display:none"><div class="in">
+  <nav class="tab" id="nav" style="display:none"><div class="in">
   <button data-tab="hoje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoje</button>
   <button data-tab="relatorios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Relatórios</button>
-  <button data-tab="registrar" class="plus" aria-label="Registrar refeição"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></button>
+  <button data-tab="registrar" class="plus" aria-label="Registrar refeição"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>Registrar</button>
   <button data-tab="peso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 9a5 5 0 0 1 8 0M12 9l1.5-2"/></svg>Peso</button>
   <button data-tab="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Perfil</button>
 </div></nav>
+  <main id="view"></main>
+</div>
+
 
 <div class="toast" id="toast"></div>
 <div id="modalRoot"></div>
